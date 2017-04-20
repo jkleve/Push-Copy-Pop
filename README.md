@@ -1,2 +1,2 @@
 # Push-Copy-Pop
-Push, copy, pop files using a stack in the terminal.
+Push, copy, pop files in the terminal using a stack.
