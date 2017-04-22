@@ -8,3 +8,5 @@ PCP uses a file in /tmp to keep track of the file stack. This allows you to jump
 I would suggest creating a symbolic link to pcp.py called pcp in a directory that is in your path. I have not taken the time yet to create an install script to do this for you.
 
 I am open to anyone who wants to make suggestions or contribute.
+
+contact: jesse.kleve@gmail.com
