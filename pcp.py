@@ -88,7 +88,7 @@ def print_stack():
     if len(_stack) == 0:
         print("The stack is empty")
     else:
-        for item, i in enumerate(_stack):
+        for i, item in enumerate(_stack):
             print("{} \t {}".format(i, item.path))
 
 
@@ -141,7 +141,8 @@ class _ArgsHandler:
 
         getattr(self, args.command)()
 
-    def push(self):
+    @staticmethod
+    def push():
         parser = argparse.ArgumentParser(description='push files to stack')
         parser.add_argument('files', metavar='f', type=str, nargs='+',
                                      help='files to push to stack')
