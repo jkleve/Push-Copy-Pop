@@ -119,11 +119,12 @@ class _ArgsHandler:
                            " copy    copy files from stack",
                            " pop     pop files from stack",
                            " delete  delete file on top of stack",
+                           " empty   empty the stack",
                            ""))
         parser = argparse.ArgumentParser(
                 description='Carry files with you as you move around in terminal',
                 usage=usage)
-        parser.add_argument('command', help='Subcommand to run')
+        parser.add_argument('command', help='Sub-command to run')
 
         # if no command, print stack
         if len(sys.argv) == 1:
@@ -214,6 +215,11 @@ class _ArgsHandler:
         delete(src)
         # print and save
         print_stack()
+        save_stack(_stack_file)
+
+    @staticmethod
+    def empty():
+        empty_stack()
         save_stack(_stack_file)
 
 # TODO add option to choose to pop from somewhere else besides the top of the stack
