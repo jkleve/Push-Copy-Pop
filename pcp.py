@@ -26,6 +26,7 @@ _stack_file = '/tmp/pop_files/stack.txt'
 _delete_dir = '/tmp/pop_files/trash'
 _stack = _load_stack(_stack_file)
 
+
 def check_exists(path):
     if os.path.exists(path):
         c = input("%s already exists. Replace? " % path)
@@ -34,12 +35,14 @@ def check_exists(path):
             return False
     return True
 
+
 def push(file):
     if exists(file):
         is_file = os.path.isfile(file)
         _stack.append(_QueueItem(is_file, file))
     else:
         print("%s doesn't exists" % file)
+
 
 def copy(item, dst):
     src = item.path
@@ -52,8 +55,9 @@ def copy(item, dst):
             log.info("Copying directory %s to %s" % (src, dst))
             if not test:
                 shutil.copytree(src, dst)
-    else: # restore stack
+     else:  # restore stack
         push(item.path)
+
 
 def move(item, dst):
     src = item.path
@@ -61,31 +65,37 @@ def move(item, dst):
         log.info("Moving %s to %s" % (src, dst))
         if not test:
             shutil.move(src, dst)
-    else: # restore stack
+    else:  # restore stack
         push(item.path)
+
 
 def delete(item):
     c = input("Delete %s? " % item.path)
     if c == 'y':
         _, f = os.path.split(item.path)
         move(item, os.path.join(_delete_dir, f))
-    else: # restore stack
+    else:  # restore stack
         push(item.path)
 
+
 def empty_stack():
+    global _stack
     _stack = list()
+
 
 def print_stack():
     for item in _stack:
         print(item.path)
 
+
 def pop_stack():
     item = None
     try:
         item = _stack.pop()
-    except IndexError as err:
+    except IndexError:
         print("Stack is empty")
     return item
+
 
 def save_stack(filename):
     d, f = os.path.split(filename)
@@ -94,6 +104,7 @@ def save_stack(filename):
     with open(filename, 'w') as f:
         for item in _stack:
             f.write("%s\n" % item.path)
+
 
 class _ArgsHandler:
     def __init__(self):
