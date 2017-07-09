@@ -136,6 +136,8 @@ class _ArgsHandler:
         if not hasattr(self, args.command):
             print("Unrecognized command")
             parser.print_help()
+            sys.exit(1)
+
         getattr(self, args.command)()
 
     def push(self):
