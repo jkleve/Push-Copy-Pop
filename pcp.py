@@ -55,7 +55,7 @@ def copy(item, dst):
             log.info("Copying directory %s to %s" % (src, dst))
             if not test:
                 shutil.copytree(src, dst)
-     else:  # restore stack
+    else:  # restore stack
         push(item.path)
 
 
@@ -84,8 +84,8 @@ def empty_stack():
 
 
 def print_stack():
-    for item in _stack:
-        print(item.path)
+    for item, i in enumerate(_stack):
+        print("{} \t {}".format(i, item.path))
 
 
 def pop_stack():
