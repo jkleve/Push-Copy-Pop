@@ -12,6 +12,7 @@ _QueueItem = namedtuple('QueueItem', ['is_file', 'path'])
 
 test = True
 
+
 def _load_stack(save_file):
     stack = list()
     if os.path.exists(save_file):
@@ -84,8 +85,11 @@ def empty_stack():
 
 
 def print_stack():
-    for item, i in enumerate(_stack):
-        print("{} \t {}".format(i, item.path))
+    if len(_stack) == 0:
+        print("The stack is empty")
+    else:
+        for item, i in enumerate(_stack):
+            print("{} \t {}".format(i, item.path))
 
 
 def pop_stack():
@@ -109,17 +113,22 @@ def save_stack(filename):
 class _ArgsHandler:
     def __init__(self):
         usage = '\n'.join(("pop <command> [<args>]",
-                        "",
-                        "Available commands:",
-                        " push    push files to stack",
-                        " copy    copy files from stack",
-                        " pop     pop files from stack",
-                        " delete  delete file on top of stack",
-                        ""))
+                           "",
+                           "Available commands:",
+                           " push    push files to stack",
+                           " copy    copy files from stack",
+                           " pop     pop files from stack",
+                           " delete  delete file on top of stack",
+                           ""))
         parser = argparse.ArgumentParser(
                 description='Carry files with you as you move around in terminal',
                 usage=usage)
         parser.add_argument('command', help='Subcommand to run')
+
+        # if no command, print stack
+        if len(sys.argv) == 1:
+            print_stack()
+            sys.exit(0)
 
         # parse just the command argument
         args = parser.parse_args(sys.argv[1:2])
