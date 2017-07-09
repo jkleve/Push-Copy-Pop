@@ -145,21 +145,21 @@ class _ArgsHandler:
     def push():
         parser = argparse.ArgumentParser(description='push files to stack')
         parser.add_argument('files', metavar='f', type=str, nargs='+',
-                                     help='files to push to stack')
+                            help='files to push to stack')
         args = parser.parse_args(sys.argv[2:])
         # push all files
-        cwd = getcwd()
         for f in args.files:
-            path = os.path.join(cwd, f)
+            path = os.path.abspath(f)
             push(path)
         # print and save
         print_stack()
         save_stack(_stack_file)
 
-    def copy(self):
+    @staticmethod
+    def copy():
         parser = argparse.ArgumentParser(description='copy files from stack')
         parser.add_argument('file', metavar='f', type=str, nargs='?',
-                                     help='directory or filename to copy to')
+                            help='directory or filename to copy to')
         args = parser.parse_args(sys.argv[2:])
         src = pop_stack()
         if src is None:
@@ -182,10 +182,11 @@ class _ArgsHandler:
         print_stack()
         save_stack(_stack_file)
 
-    def pop(self):
+    @staticmethod
+    def pop():
         parser = argparse.ArgumentParser(description='pop files from stack')
         parser.add_argument('file', metavar='f', type=str, nargs='?',
-                                     help='directory or filename to move to')
+                            help='directory or filename to move to')
         args = parser.parse_args(sys.argv[2:])
         src = pop_stack()
         if src is None:
@@ -208,7 +209,8 @@ class _ArgsHandler:
         print_stack()
         save_stack(_stack_file)
 
-    def delete(self):
+    @staticmethod
+    def delete():
         src = pop_stack()
         if src is None:
             print("Nothing is in the stack")

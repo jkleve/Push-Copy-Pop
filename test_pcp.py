@@ -8,6 +8,7 @@ class TestPush(unittest.TestCase):
     def setUp(self):
         print("\n================")
         print("Testing {}".format(self.id()))
+        pcp.test = True
         pcp.empty_stack()
         sys.argv.append("push")
 
@@ -33,10 +34,30 @@ class TestPush(unittest.TestCase):
         self.assertEqual(len(pcp._stack), 1)
 
     def test_two_files(self):
-        sys.argv.append("LICENSE README.md")
+        sys.argv.append("LICENSE")
+        sys.argv.append("README.md")
         pcp._ArgsHandler.push()
         self.assertEqual(len(pcp._stack), 2)
 
+
+class TestPop(unittest.TestCase):
+    def setUp(self):
+        print("\n================")
+        print("Testing {}".format(self.id()))
+        pcp.test = True
+        pcp.empty_stack()
+        sys.argv.append("pop")
+
+    def tearDown(self):
+        pcp.empty_stack()
+        del sys.argv[1:]
+        print("Done testing {}".format(self.id()))
+        print("================")
+
+    def test_file_does_not_exist(self):
+        sys.argv.append("LICENSES")
+        pcp._ArgsHandler.pop()
+        self.assertEqual(len(pcp._stack), 0)
 
 if __name__ == "__main__":
     unittest.main()
